@@ -1,18 +1,28 @@
 package com.workshop.santa.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "elfs")
 public class Elf {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long elfId;
+
+    @Column(length = 50,nullable = false)
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private ElfSkillLevel skillLevel;
-    private List<Long> assignedGifts;
+
+    @ElementCollection
+    @CollectionTable(name = "assigned_gifts", joinColumns = @JoinColumn(name = "elfId"))
+    @Column(name = "gifts_id")
+    private List<Long> assignedGifts = new ArrayList<>();
 
     public Elf() {
     }
@@ -20,11 +30,10 @@ public class Elf {
     public Elf(String name, ElfSkillLevel skillLevel, List<Long> assignedGifts) {
         this.name = name;
         this.skillLevel = skillLevel;
-        this.assignedGifts = assignedGifts;
     }
 
-    public Long getId() {
-        return id;
+    public Long getElfId() {
+        return elfId;
     }
 
     public String getName() {

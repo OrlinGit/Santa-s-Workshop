@@ -1,25 +1,91 @@
 package com.workshop.santa.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
+@Entity
+@Table(name = "deliveries")
 public class Delivery {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotBlank
-    @Size(min = 5, max = 120)
+    private Long deliveryId;
+
+    @Column(length = 130, nullable = false)
     private String address;
-    @NotBlank
+
+    @Column(length = 255, nullable = false)
     private String recipientName;
-    @Size(min = 1)
-    private List<Long> giftsId;
+
+    @ElementCollection
+    @CollectionTable(name = "delivery_gifts", joinColumns =@JoinColumn(name = "delivery_id"))
+    @Column(name = "gift_id")
+    private List<Long> giftIds;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private DeliveryStatus status;
-    private LocalDateTime deliveryDate;
+
+    @Column(nullable = false, updatable = true)
+    private LocalDate deliveryDate;
+
+    public Delivery() {
+    }
+
+    @PrePersist
+    private void createDeliveryDate() {
+        if (deliveryDate == null) {
+            deliveryDate = LocalDate.now().plusDays(14);
+        }
+    }
+
+    public Delivery(String address, String recipientName, List<Long> giftIds, DeliveryStatus status) {
+        this.address = address;
+        this.recipientName = recipientName;
+        this.giftIds = giftIds;
+        this.status = status;
+
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getRecipientName() {
+        return recipientName;
+    }
+
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
+    }
+
+    public List<Long> getGiftIds() {
+        return giftIds;
+    }
+
+    public void setGiftIds(List<Long> giftIds) {
+        this.giftIds = giftIds;
+    }
+
+    public DeliveryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DeliveryStatus status) {
+        this.status = status;
+    }
+
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
 }

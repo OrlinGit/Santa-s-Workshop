@@ -1,42 +1,56 @@
 package com.workshop.santa.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Positive;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "gifts")
 public class Gift {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long giftId;
+
+    @Column(length = 50, nullable = false)
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private GiftCategory category;
-    @Positive
-    @Max(value = 99)
-    private int targetAge;
-    private Boolean isWrapped;
+
+    @Column(nullable = true)
+    private Integer targetAge;
+
+    @Column(nullable = false)
+    private boolean isWrapped = false;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private GiftStatus status;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @PrePersist
+    void onCreate(){
+        this.createdAt = LocalDateTime.now();
+    }
     public Gift() {
     }
 
-    public Gift(String name, GiftCategory category, int targetAge, Boolean isWrapped, GiftStatus status, LocalDateTime createdAt) {
+    public Gift(String name, GiftCategory category, int targetAge, Boolean isWrapped, GiftStatus status) {
         this.name = name;
         this.category = category;
         this.targetAge = targetAge;
         this.isWrapped = isWrapped;
         this.status = status;
-        this.createdAt = LocalDateTime.now();
     }
 
 
 
-    public Long getId() {
-        return id;
+    public Long getGiftId() {
+        return giftId;
     }
 
     public String getName() {
@@ -63,11 +77,11 @@ public class Gift {
         this.targetAge = targetAge;
     }
 
-    public Boolean getWrapped() {
+    public boolean getWrapped() {
         return isWrapped;
     }
 
-    public void setWrapped(Boolean wrapped) {
+    public void setWrapped(boolean wrapped) {
         isWrapped = wrapped;
     }
 
@@ -83,7 +97,4 @@ public class Gift {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }
