@@ -20,7 +20,7 @@ public class Elf {
     private ElfSkillLevel skillLevel;
 
     @ElementCollection
-    @CollectionTable(name = "assigned_gifts", joinColumns = @JoinColumn(name = "elfId"))
+    @CollectionTable(name = "assigned_gifts", joinColumns = @JoinColumn(name = "elf_id"))
     @Column(name = "gifts_id")
     private List<Long> assignedGifts = new ArrayList<>();
 
