@@ -1,6 +1,6 @@
-# Santa-s-Workshop
 A small app to help Santa streamline his production capacity.
 
+<<<<<<< Updated upstream
 In order to srat the app you will ned some set up in advance :) 
 Teh application works with PostgreSQL Database and is set to comunictae with one.
 In order to do so youneed to have a PostgreSQL installed on your computer.
