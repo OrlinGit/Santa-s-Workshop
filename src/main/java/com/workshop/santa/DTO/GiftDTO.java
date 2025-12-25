@@ -2,8 +2,9 @@ package com.workshop.santa.DTO;
 
 
 import com.workshop.santa.model.GiftCategory;
-import com.workshop.santa.model.GiftStatus;
 import jakarta.validation.constraints.*;
+
+import java.time.LocalDateTime;
 
 public class GiftDTO {
 
@@ -18,8 +19,6 @@ public class GiftDTO {
     @Max(value = 99)
     private Integer targetAge;
 
-    @NotNull
-    private GiftStatus status;
 
     public String getName() {
         return name;
@@ -45,11 +44,13 @@ public class GiftDTO {
         this.targetAge = targetAge;
     }
 
-    public GiftStatus getStatus() {
-        return status;
+    public void setId(Long giftId) {
+
     }
 
-    public void setStatus(GiftStatus status) {
-        this.status = status;
+    public void setIsWrapped(boolean wrapped) {
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
     }
 }
