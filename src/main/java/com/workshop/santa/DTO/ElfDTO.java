@@ -34,4 +34,10 @@ public class ElfDTO {
         this.skillLevel = skillLevel;
     }
 
+    public void setId(Long elfId) {
+        
+    }
+
+    public void setAssignedGifts(List<Long> assignedGifts) {
+    }
 }
