@@ -11,8 +11,8 @@ public interface ElvesInterface {
 
     ElfDTO getElfById(Long id);
 
-    ElfDTO updateElf(Long id, ElfDTO newElfDTO);
-
     void deleteElf(Long id);
 
-}
+    ElfDTO assignGift(Long elfIdAssign, Long giftIdForAssignment);
+
+    }

@@ -4,6 +4,7 @@ import com.workshop.santa.DTO.GiftDTO;
 import com.workshop.santa.model.Gift;
 import com.workshop.santa.repository.GiftRepo;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class GiftService implements GiftInterface {
     }
 
 @Override
-        public GiftDTO createGift(GiftDTO giftDTO) {
+        public GiftDTO createGift(@Valid GiftDTO giftDTO) {
         Gift gift = new Gift();
         gift.setName(giftDTO.getName());
         gift.setCategory(giftDTO.getCategory());
@@ -71,7 +72,7 @@ public class GiftService implements GiftInterface {
     }
 
     @Override
-    public GiftDTO updateGift(Long id, GiftDTO newGiftDTO) {
+    public GiftDTO updateGift(Long id, @Valid GiftDTO newGiftDTO) {
         if (giftRepo.findById(id).isPresent()) {
             Gift gift = giftRepo.getReferenceById(id);
             gift.setName(newGiftDTO.getName());
