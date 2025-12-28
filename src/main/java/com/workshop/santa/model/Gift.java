@@ -27,7 +27,7 @@ public class Gift {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private GiftStatus status = GiftStatus.PENDING;
+    private GiftStatus status;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

@@ -25,6 +25,7 @@ public class GiftService implements GiftInterface {
         gift.setName(giftDTO.getName());
         gift.setCategory(giftDTO.getCategory());
         gift.setTargetAge(giftDTO.getTargetAge());
+        gift.setStatus(giftDTO.getStatus());
         gift.setWrapped(false);
 
         Gift savedGift = giftRepo.save(gift);
@@ -33,6 +34,7 @@ public class GiftService implements GiftInterface {
         response.setName(savedGift.getName());
         response.setCategory(savedGift.getCategory());
         response.setTargetAge(savedGift.getTargetAge());
+        response.setStatus(savedGift.getStatus());
         return response;
 
     }
@@ -49,6 +51,7 @@ public class GiftService implements GiftInterface {
             giftDTO.setTargetAge(gift.getTargetAge());
             giftDTO.setIsWrapped(gift.getWrapped());
             giftDTO.setCreatedAt(gift.getCreatedAt());
+            giftDTO.setStatus(giftDTO.getStatus());
             response.add(giftDTO);
         }
     return response;
@@ -65,6 +68,7 @@ public class GiftService implements GiftInterface {
             response.setTargetAge(gift.getTargetAge());
             response.setIsWrapped(gift.getWrapped());
             response.setCreatedAt(gift.getCreatedAt());
+            response.setStatus(gift.getStatus());
             return response;
         } else {
             throw new EntityNotFoundException("Gift with id " + id + " not found");
@@ -78,6 +82,7 @@ public class GiftService implements GiftInterface {
             gift.setName(newGiftDTO.getName());
             gift.setCategory(newGiftDTO.getCategory());
             gift.setTargetAge(newGiftDTO.getTargetAge());
+            gift.setStatus(newGiftDTO.getStatus());
 
             Gift updatedGift = giftRepo.save(gift);
 
@@ -85,6 +90,7 @@ public class GiftService implements GiftInterface {
             response.setName(updatedGift.getName());
             response.setCategory(updatedGift.getCategory());
             response.setTargetAge(updatedGift.getTargetAge());
+            response.setStatus(updatedGift.getStatus());
             return response;
         } else {
             throw new EntityNotFoundException("Gift with id " + id + " not found");
@@ -105,6 +111,7 @@ public class GiftService implements GiftInterface {
                 response.setCategory(gift.getCategory());
                 response.setTargetAge(gift.getTargetAge());
                 response.setIsWrapped(gift.getWrapped());
+                response.setStatus(gift.getStatus());
                 return response;
 
         } else {

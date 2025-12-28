@@ -76,7 +76,7 @@ public class ElvesService implements ElvesInterface{
 
     //POST /api/elves/{elfId}/assign/{giftId}
     @Override
-    public ElfDTO assignGift(Long elfIdToAssign, Long giftIdForAssignment){
+    public void assignGift(Long elfIdToAssign, Long giftIdForAssignment){
         if(giftRepo.findById(giftIdForAssignment).isEmpty()){
             throw new EntityNotFoundException("Gift with id " + giftIdForAssignment + " not found");
         } else if (elfRepo.findById(elfIdToAssign).isEmpty()) {
@@ -97,7 +97,6 @@ public class ElvesService implements ElvesInterface{
             result.setSkillLevel(elfToAssign.getSkillLevel());
             result.setAssignedGifts(updatedList);
 
-            return result;
         }
     }
 

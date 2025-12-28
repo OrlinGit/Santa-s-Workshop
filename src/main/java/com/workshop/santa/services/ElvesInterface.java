@@ -13,6 +13,6 @@ public interface ElvesInterface {
 
     void deleteElf(Long id);
 
-    ElfDTO assignGift(Long elfIdAssign, Long giftIdForAssignment);
+    void assignGift(Long elfIdAssign, Long giftIdForAssignment);
 
     }
