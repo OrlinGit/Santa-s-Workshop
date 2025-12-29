@@ -1,7 +1,6 @@
 package com.workshop.santa.controller;
 
 import com.workshop.santa.DTO.ElfDTO;
-import com.workshop.santa.model.Elf;
 import com.workshop.santa.services.ElvesService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;

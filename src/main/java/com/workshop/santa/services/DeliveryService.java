@@ -1,11 +1,16 @@
 package com.workshop.santa.services;
 
 import com.workshop.santa.DTO.DeliveryDTO;
+import com.workshop.santa.model.Delivery;
+import com.workshop.santa.model.Gift;
+import com.workshop.santa.model.GiftStatus;
 import com.workshop.santa.repository.DeliveryRepo;
 import com.workshop.santa.repository.GiftRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,9 +27,38 @@ public class DeliveryService implements DeliveryInterface{
 
 
     @Override
+    @Transactional
     public DeliveryDTO createDelivery(DeliveryDTO deliveryDTO) {
+        Delivery delivery = new Delivery();
+        delivery.setRecipientName(deliveryDTO.getRecipientName());
+        delivery.setAddress(deliveryDTO.getAddress());
+        List<Long> ids = deliveryDTO.getGiftIds();
+        List<Long> addedGifts = new ArrayList<>();
+        for (Long id : ids){
+            if (!giftRepo.existsById(id)){
+                throw new EntityNotFoundException ("Gift with id" + id + "not found");
+            }
+            Gift gift = giftRepo.getReferenceById(id);
+            GiftStatus currentIdStatus = gift.getStatus();
+            if ((!currentIdStatus.equals(GiftStatus.READY)) && (!currentIdStatus.equals(GiftStatus.LOADED))) {
+                throw new IllegalStateException("Gift with id " + id + " is with invalid status!");
+            }
+            else
+            {
 
-        return null;
+                gift.setStatus(GiftStatus.LOADED);
+                giftRepo.save(gift);
+                addedGifts.add(id);
+            }
+        }
+        delivery.setGiftIds(addedGifts);
+        deliveryRepo.save(delivery);
+
+        DeliveryDTO result = new DeliveryDTO();
+        result.setRecipientName(deliveryDTO.getRecipientName());
+        result.setAddress(delivery.getAddress());
+        result.setGiftIds(delivery.getGiftIds());
+        return result;
     }
 
     @Override
