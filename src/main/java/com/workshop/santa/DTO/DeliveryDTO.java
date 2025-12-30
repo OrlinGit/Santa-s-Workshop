@@ -1,9 +1,9 @@
 package com.workshop.santa.DTO;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import com.workshop.santa.model.DeliveryStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -42,4 +42,5 @@ public class DeliveryDTO {
     public void setGiftIds(List<Long> giftIds) {
         this.giftIds = giftIds;
     }
+
 }

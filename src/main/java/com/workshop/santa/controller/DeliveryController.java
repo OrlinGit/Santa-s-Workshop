@@ -1,16 +1,16 @@
 package com.workshop.santa.controller;
 
 import com.workshop.santa.DTO.DeliveryDTO;
+import com.workshop.santa.model.DeliveryStatus;
 import com.workshop.santa.services.DeliveryService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/deliveries")
@@ -31,5 +31,12 @@ public class DeliveryController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<List<DeliveryDTO>> getDeliveries(@RequestParam(required = false) String recipientName,
+                                                            @RequestParam(required = false) DeliveryStatus status){
+
+        List<DeliveryDTO> deliveries = deliveryService.getAllDeliveries(recipientName, status);
+        return ResponseEntity.status(HttpStatus.OK).body(deliveries);
+    }
 
 }

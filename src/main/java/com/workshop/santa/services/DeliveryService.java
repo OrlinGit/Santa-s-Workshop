@@ -2,6 +2,7 @@ package com.workshop.santa.services;
 
 import com.workshop.santa.DTO.DeliveryDTO;
 import com.workshop.santa.model.Delivery;
+import com.workshop.santa.model.DeliveryStatus;
 import com.workshop.santa.model.Gift;
 import com.workshop.santa.model.GiftStatus;
 import com.workshop.santa.repository.DeliveryRepo;
@@ -52,6 +53,7 @@ public class DeliveryService implements DeliveryInterface{
             }
         }
         delivery.setGiftIds(addedGifts);
+        delivery.setStatus(DeliveryStatus.IN_TRANSIT);
         deliveryRepo.save(delivery);
 
         DeliveryDTO result = new DeliveryDTO();
@@ -61,9 +63,26 @@ public class DeliveryService implements DeliveryInterface{
         return result;
     }
 
+
     @Override
-    public List<DeliveryDTO> getAllDeliveries() {
-        return List.of();
+    public List<DeliveryDTO> getAllDeliveries(String recipientName, DeliveryStatus status) {
+        List<Delivery> deliveries = new ArrayList<>();
+        if(status != null){
+            deliveries = deliveryRepo.findByStatus(status);
+        } else if (recipientName != null) {
+            deliveries = deliveryRepo.findByRecipientNameIgnoreCase(recipientName);
+        } else {
+            deliveries = deliveryRepo.findAll();
+        }
+        List<DeliveryDTO> response = new ArrayList<>();
+        for (Delivery delivery : deliveries){
+            DeliveryDTO currentDelivery = new DeliveryDTO();
+            currentDelivery.setAddress(delivery.getAddress());
+            currentDelivery.setRecipientName(delivery.getRecipientName());
+            currentDelivery.setGiftIds(delivery.getGiftIds());
+            response.add(currentDelivery);
+        }
+        return response;
     }
 
     @Override
