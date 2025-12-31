@@ -1,6 +1,8 @@
 package com.workshop.santa.controller;
 
 import com.workshop.santa.DTO.GiftDTO;
+import com.workshop.santa.model.GiftCategory;
+import com.workshop.santa.model.GiftStatus;
 import com.workshop.santa.services.GiftService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -25,8 +27,10 @@ public class GiftController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<GiftDTO>> getAllGifts() {
-        List<GiftDTO> getAllGifts = giftService.getAllGifts();
+    public ResponseEntity<List<GiftDTO>> getAllGifts(@RequestParam(required = false) GiftStatus status,
+                                                     @RequestParam(required = false) GiftCategory category,
+                                                     @RequestParam(required = false) Boolean wrapped) {
+        List<GiftDTO> getAllGifts = giftService.getAllGifts(status, category, wrapped);
         return ResponseEntity.status(HttpStatus.OK).body(getAllGifts);
     }
 

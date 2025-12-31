@@ -56,7 +56,9 @@ public class ElvesController {
     }
 
     @PostMapping("/{elfId}/assign/{giftId}")
-    public ResponseEntity<ElfDTO> assignGiftToElf(@RequestBody @Valid ElfDTO elfWithAssignedGift, @PathVariable Long elfId, @PathVariable Long giftId) {
+    public ResponseEntity<ElfDTO> assignGiftToElf(@RequestBody @Valid ElfDTO elfWithAssignedGift,
+                                                  @PathVariable Long elfId,
+                                                  @PathVariable Long giftId) {
         try {
            elvesService.assignGift(elfId, giftId);
            return ResponseEntity.status(HttpStatus.OK).body(elfWithAssignedGift);

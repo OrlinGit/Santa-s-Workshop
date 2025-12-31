@@ -2,11 +2,12 @@ package com.workshop.santa.services;
 
 import com.workshop.santa.DTO.GiftDTO;
 import com.workshop.santa.model.Gift;
+import com.workshop.santa.model.GiftCategory;
+import com.workshop.santa.model.GiftStatus;
 import com.workshop.santa.repository.GiftRepo;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +42,25 @@ public class GiftService implements GiftInterface {
     }
 
     @Override
-    public List<GiftDTO> getAllGifts() {
+    public List<GiftDTO> getAllGifts(GiftStatus status,
+                                     GiftCategory category,
+                                     Boolean wrapped) {
         List<GiftDTO> response = new ArrayList<>();
-        List<Gift> gifts = giftRepo.findAll();
+        List<Gift> gifts = new ArrayList<>();
+        if (status != null && category != null && wrapped != null) {
+            gifts = giftRepo.findByStatusAndCategoryAndWrapped(
+                    status, category, wrapped);
+        } else if (status != null && category != null) {
+            gifts = giftRepo.findByStatusAndCategory(status, category);
+        } else if (status != null) {
+            gifts = giftRepo.findByStatus(status);
+        } else if (category != null) {
+            gifts = giftRepo.findByCategory(category);
+        } else if (wrapped != null) {
+            gifts = giftRepo.findByWrapped(wrapped);
+        } else {
+            gifts = giftRepo.findAll();
+        }
         for (Gift gift : gifts) {
             GiftDTO giftDTO = new GiftDTO();
             giftDTO.setId(gift.getGiftId());
@@ -52,7 +69,7 @@ public class GiftService implements GiftInterface {
             giftDTO.setTargetAge(gift.getTargetAge());
             giftDTO.setIsWrapped(gift.getWrapped());
             giftDTO.setCreatedAt(gift.getCreatedAt());
-            giftDTO.setStatus(giftDTO.getStatus());
+            giftDTO.setStatus(gift.getStatus());
             response.add(giftDTO);
         }
     return response;
