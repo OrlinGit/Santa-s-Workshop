@@ -1,12 +1,46 @@
-A small app to help Santa streamline his production capacity.
+Santa's Workshop
 
-<<<<<<< Updated upstream
-In order to srat the app you will ned some set up in advance :) 
-Teh application works with PostgreSQL Database and is set to communicate with one.
-In order to do so you need to have a PostgreSQL installed on your computer.
-Second yuo need to start the pgAdmin and create in one of your servers database that is named: "santa_workshop"
-After that you need to go to the application properties of the database and file in the username and password of your server.
-Please change ${DB_USERNAME} with your username and ${DB_PASSWORD} with your password in order the DB to work.
-If you have already set up your OS variables to work your credentials please ignore this step :) 
-I have tried to to it in this way in order to avoid leaking credentials in public app (and because I found the settings while checking ho to set my database :) )
-Also I have set the server port to 8081 because port 8080 on my machine is always busy with something and I do not know with what :)
+A small application to help Santa streamline gift production and manage deliveries.
+
+Project Overview
+
+A simple back-end application for managing gifts and deliveries using Java, Spring Boot, and PostgreSQL.
+
+
+Technologies Used
+
+Java 21
+Spring Boot
+Maven
+PostgreSQL
+
+
+Setup / Installation / Run
+Prerequisites
+
+PostgreSQL installed on your computer.
+Create a database named santa_workshop in pgAdmin or via your PostgreSQL server.
+Update application.properties with your database username and password:
+
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+
+If your OS already has environment variables set for the DB credentials, you can skip this step.
+
+The server is set to run on port 8081. Make sure this port is free.
+
+
+Running the Application
+
+1. Download the JAR file from the release page: app-0.0.1-SNAPSHOT.jar
+2. Open a terminal or command prompt in the folder where the JAR is located.
+3. Run the application:
+java -jar app-0.0.1-SNAPSHOT.jar
+4. After Spring Boot starts, open your browser and go to:
+   http://localhost:8081
+
+Make sure the port is not used by another application.
+
+Testing
+
+It is recommended to use Postman or similar tools to send HTTP requests to test the API endpoints.
