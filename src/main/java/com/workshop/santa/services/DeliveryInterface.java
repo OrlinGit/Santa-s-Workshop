@@ -17,4 +17,6 @@ public interface DeliveryInterface {
 
     void deleteDeliveryById (Long id);
 
+    void changeDeliveryStatus(Long id, DeliveryStatus status);
+
 }

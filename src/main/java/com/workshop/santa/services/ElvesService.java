@@ -87,7 +87,7 @@ public class ElvesService implements ElvesInterface{
             if(!updatedList.contains(giftIdForAssignment)){
                 updatedList.add(giftIdForAssignment);
             } else {
-                throw new IllegalStateException("Gift with id" + giftIdForAssignment + "is alreday assigned");
+                throw new IllegalStateException("Gift with id " + giftIdForAssignment + " is already assigned");
             }
             elfRepo.save(elfToAssign);
 

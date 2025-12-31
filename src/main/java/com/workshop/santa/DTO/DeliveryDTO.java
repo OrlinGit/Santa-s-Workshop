@@ -1,8 +1,5 @@
 package com.workshop.santa.DTO;
 
-import com.workshop.santa.model.DeliveryStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 
 import java.util.List;
